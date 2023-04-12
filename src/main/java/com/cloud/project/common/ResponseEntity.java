@@ -31,6 +31,7 @@ public class ResponseEntity<T>  implements Serializable {
      */
     private Integer code;
 
+    private Integer total = 0;
     /**
      * 味精
      */
@@ -41,8 +42,10 @@ public class ResponseEntity<T>  implements Serializable {
      */
     private T data;
 
-    private ResponseEntity() {
-
+    private ResponseEntity(Integer code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
     }
 
     private static <T> ResponseEntity<T> build(Integer code, String msg, T data) {
@@ -83,8 +86,9 @@ public class ResponseEntity<T>  implements Serializable {
     }
 
 
-    public static <T> ResponseEntity<List<T>> pageBuild(Long total, Boolean next, Boolean previous, List<T> data) {
+    public static <T> ResponseEntity<List<T>> pageBuild(int total, List<T> data) {
         ResponseEntity<List<T>> build = build(OK_CODE, OK_MSG, data);
+        build.total = total;
         return build;
     }
 
