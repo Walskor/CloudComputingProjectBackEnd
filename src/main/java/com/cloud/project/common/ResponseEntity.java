@@ -92,4 +92,10 @@ public class ResponseEntity<T>  implements Serializable {
         return build;
     }
 
+    public static <T> ResponseEntity<T> resultBuild(int total, T data) {
+        ResponseEntity<T> build = build(OK_CODE, OK_MSG, data);
+        build.total = total;
+        return build;
+    }
+
 }

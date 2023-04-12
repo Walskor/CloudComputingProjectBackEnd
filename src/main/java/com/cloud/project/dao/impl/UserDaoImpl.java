@@ -17,7 +17,7 @@ public class UserDaoImpl implements UserDao {
     private DataSource dataSource;
 
     @Override
-    public User findById(Long id) {
+    public User findById(int id) {
         String sql = "SELECT * FROM user WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
