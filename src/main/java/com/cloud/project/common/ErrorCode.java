@@ -9,4 +9,6 @@ public class ErrorCode{
     public static final Integer TargetNotExists = 301;
 
     public static final Integer DeleteError = 401;
+
+    public static final Integer SendFailed = 402;
 }
