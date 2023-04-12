@@ -53,8 +53,6 @@ public class ArticleController {
             return ResponseEntity.ok(null);
         }
         return ResponseEntity.error(ErrorCode.RegisterFailed, "Create Article Failed!",null);
-
-
     }
 }
 
