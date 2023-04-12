@@ -7,4 +7,6 @@ public class ErrorCode{
     public static final Integer RegisterFailed = 101;
 
     public static final Integer TargetNotExists = 301;
+
+    public static final Integer DeleteError = 401;
 }
