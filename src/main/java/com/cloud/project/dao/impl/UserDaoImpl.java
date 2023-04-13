@@ -18,16 +18,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(int id) {
-        String sql = "SELECT * FROM user WHERE id = ?";
+        String sql = "SELECT * FROM Users WHERE u_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     User user = new User();
-                    user.setId(resultSet.getInt("id"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setPassword(resultSet.getString("password"));
+                    user.setId(resultSet.getInt("u_id"));
+                    user.setUsername(resultSet.getString("u_name"));
+                    user.setPassword(resultSet.getString("u_password"));
                     return user;
                 }
             }
@@ -39,16 +39,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByUsername(String username) {
-        String sql = "SELECT * FROM user WHERE username = ?";
+        String sql = "SELECT * FROM Users WHERE u_name = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, username);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     User user = new User();
-                    user.setId(resultSet.getInt("id"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setPassword(resultSet.getString("password"));
+                    user.setId(resultSet.getInt("u_id"));
+                    user.setUsername(resultSet.getString("u_name"));
+                    user.setPassword(resultSet.getString("u_password"));
                     return user;
                 }
             }
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int insert(User user) {
-        String sql = "INSERT INTO user(username, password, isGuide) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO Users(u_name, u_password, u_is_guide) VALUES(?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getUsername());
