@@ -22,18 +22,18 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order findById(int id) {
-        String sql = "SELECT * FROM `order` WHERE id = ?";
+        String sql = "SELECT * FROM Orders WHERE o_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Order order = new Order();
-                    order.setId(resultSet.getInt("id"));
-                    order.setArticleId(resultSet.getInt("article_id"));
-                    order.setBuyerId(resultSet.getInt("buyer_id"));
-                    order.setTimeStamp(resultSet.getTimestamp("time_stamp"));
-                    order.setCount(resultSet.getInt("count"));
+                    order.setId(resultSet.getInt("o_id"));
+                    order.setArticleId(resultSet.getInt("o_a_id"));
+                    order.setBuyerId(resultSet.getInt("o_buyer_u_id"));
+                    order.setTimeStamp(resultSet.getTimestamp("o_time"));
+                    order.setCount(resultSet.getInt("o_count"));
                     return order;
                 }
             }
@@ -46,18 +46,18 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> findByBuyer(int buyerId) {
         List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM `order` WHERE buyer_id = ?";
+        String sql = "SELECT * FROM Orders WHERE o_buyer_u_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, buyerId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Order order = new Order();
-                    order.setId(resultSet.getInt("id"));
-                    order.setArticleId(resultSet.getInt("article_id"));
-                    order.setBuyerId(resultSet.getInt("buyer_id"));
-                    order.setTimeStamp(resultSet.getTimestamp("time_stamp"));
-                    order.setCount(resultSet.getInt("count"));
+                    order.setId(resultSet.getInt("o_id"));
+                    order.setArticleId(resultSet.getInt("o_a_id"));
+                    order.setBuyerId(resultSet.getInt("o_buyer_u_id"));
+                    order.setTimeStamp(resultSet.getTimestamp("o_time"));
+                    order.setCount(resultSet.getInt("o_count"));
                     orders.add(order);
                 }
             }
@@ -69,7 +69,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int createOrder(Order order) {
-        String sql = "INSERT INTO `order`(article_id, buyer_id, time_stamp, count) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO Orders(o_a_id, o_buyer_u_id, o_time, o_count) VALUES(?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, order.getArticleId());
@@ -94,7 +94,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int deleteOrder(int id) {
-        String sql = "DELETE FROM `order` WHERE id = ?";
+        String sql = "DELETE FROM Orders WHERE o_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
