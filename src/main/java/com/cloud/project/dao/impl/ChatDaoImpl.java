@@ -23,15 +23,15 @@ public class ChatDaoImpl implements ChatDao {
     @Override
     public List<Integer> relatedId(int id) {
         Set<Integer> relatedIds = new HashSet<>();
-        String sql = "SELECT visitor_id, guide_id FROM chat WHERE visitor_id = ? OR guide_id = ?";
+        String sql = "SELECT c_buyer_u_id, c_guide_u_id FROM Chat WHERE c_buyer_u_id = ? OR c_guide_u_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.setInt(2, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    relatedIds.add(resultSet.getInt("visitor_id"));
-                    relatedIds.add(resultSet.getInt("guide_id"));
+                    relatedIds.add(resultSet.getInt("c_buyer_u_id"));
+                    relatedIds.add(resultSet.getInt("c_guide_u_id"));
                 }
             }
         } catch (Exception e) {
@@ -43,17 +43,17 @@ public class ChatDaoImpl implements ChatDao {
 
     @Override
     public Chat findByChatId(int id) {
-        String sql = "SELECT * FROM chat WHERE id = ?";
+        String sql = "SELECT * FROM Chat WHERE c_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Chat chat = new Chat();
-                    chat.setId(resultSet.getInt("id"));
-                    chat.setVisitor_id(resultSet.getInt("visitor_id"));
-                    chat.setGuide_id(resultSet.getInt("guide_id"));
-                    chat.setContent(resultSet.getString("content"));
+                    chat.setId(resultSet.getInt("c_id"));
+                    chat.setVisitor_id(resultSet.getInt("c_buyer_u_id"));
+                    chat.setGuide_id(resultSet.getInt("c_guide_u_id"));
+                    chat.setContent(resultSet.getString("c_content"));
                     return chat;
                 }
             }
@@ -66,7 +66,7 @@ public class ChatDaoImpl implements ChatDao {
 
     @Override
     public Chat findByUsers(int a_id, int b_id) {
-        String sql = "SELECT * FROM chat WHERE (visitor_id = ? AND guide_id = ?) OR (visitor_id = ? AND guide_id = ?)";
+        String sql = "SELECT * FROM Chat WHERE (c_buyer_u_id = ? AND c_guide_u_id = ?) OR (c_buyer_u_id = ? AND c_guide_u_id = ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, a_id);
@@ -76,10 +76,10 @@ public class ChatDaoImpl implements ChatDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Chat chat = new Chat();
-                    chat.setId(resultSet.getInt("id"));
-                    chat.setVisitor_id(resultSet.getInt("visitor_id"));
-                    chat.setGuide_id(resultSet.getInt("guide_id"));
-                    chat.setContent(resultSet.getString("content"));
+                    chat.setId(resultSet.getInt("c_id"));
+                    chat.setVisitor_id(resultSet.getInt("c_buyer_u_id"));
+                    chat.setGuide_id(resultSet.getInt("c_guide_u_id"));
+                    chat.setContent(resultSet.getString("c_content"));
                     return chat;
                 }
             }
@@ -101,7 +101,7 @@ public class ChatDaoImpl implements ChatDao {
             }
             String updatedContent = chat.getContent() + "\n" + sender + ": " + message;
             chat.setContent(updatedContent);
-            String sql = "UPDATE chat SET content = ? WHERE id = ?";
+            String sql = "UPDATE Chat SET c_content = ? WHERE c_id = ?";
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, updatedContent);
