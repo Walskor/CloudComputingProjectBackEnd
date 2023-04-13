@@ -20,18 +20,18 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public Article findById(int id) {
-        String sql = "SELECT * FROM article WHERE id = ?";
+        String sql = "SELECT * FROM Article WHERE a_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Article article = new Article();
-                    article.setId(resultSet.getInt("id"));
-                    article.setTitle(resultSet.getString("title"));
-                    article.setContent(resultSet.getString("content"));
-                    article.setAuthorId(resultSet.getInt("author_id"));
-                    article.setCount(resultSet.getInt("count"));
+                    article.setId(resultSet.getInt("a_id"));
+                    article.setTitle(resultSet.getString("a_title"));
+                    article.setContent(resultSet.getString("a_content"));
+                    article.setAuthorId(resultSet.getInt("a_guide_u_id"));
+                    article.setCount(resultSet.getInt("a_sell_count"));
                     return article;
                 }
             }
@@ -44,18 +44,18 @@ public class ArticleDaoImpl implements ArticleDao {
     @Override
     public List<Article> findByTitle(String title) {
         List<Article> articles = new ArrayList<>();
-        String sql = "SELECT * FROM article WHERE title LIKE ?";
+        String sql = "SELECT * FROM Article WHERE a_title LIKE ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, "%" + title + "%");
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Article article = new Article();
-                    article.setId(resultSet.getInt("id"));
-                    article.setTitle(resultSet.getString("title"));
-                    article.setContent(resultSet.getString("content"));
-                    article.setAuthorId(resultSet.getInt("author_id"));
-                    article.setCount(resultSet.getInt("count"));
+                    article.setId(resultSet.getInt("a_id"));
+                    article.setTitle(resultSet.getString("a_title"));
+                    article.setContent(resultSet.getString("a_content"));
+                    article.setAuthorId(resultSet.getInt("a_guide_u_id"));
+                    article.setCount(resultSet.getInt("a_sell_count"));
                     articles.add(article);
                 }
             }
@@ -68,18 +68,18 @@ public class ArticleDaoImpl implements ArticleDao {
     @Override
     public List<Article> findByAuthor(int authorId) {
         List<Article> articles = new ArrayList<>();
-        String sql = "SELECT * FROM article WHERE author_id = ?";
+        String sql = "SELECT * FROM Article WHERE a_guide_u_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, authorId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Article article = new Article();
-                    article.setId(resultSet.getInt("id"));
-                    article.setTitle(resultSet.getString("title"));
-                    article.setContent(resultSet.getString("content"));
-                    article.setAuthorId(resultSet.getInt("author_id"));
-                    article.setCount(resultSet.getInt("count"));
+                    article.setId(resultSet.getInt("a_id"));
+                    article.setTitle(resultSet.getString("a_title"));
+                    article.setContent(resultSet.getString("a_content"));
+                    article.setAuthorId(resultSet.getInt("a_guide_u_id"));
+                    article.setCount(resultSet.getInt("a_sell_count"));
                     articles.add(article);
                 }
             }
@@ -91,7 +91,7 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public int createArticle(Article article) {
-        String sql = "INSERT INTO article(title, content, author_id, count) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO Article(a_title, a_content, a_guide_u_id, a_sell_count) VALUES(?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, article.getTitle());
@@ -116,7 +116,7 @@ public class ArticleDaoImpl implements ArticleDao {
 
     @Override
     public int addCount(int id) {
-        String sql = "UPDATE article SET count = count + 1 WHERE id = ?";
+        String sql = "UPDATE Article SET a_sell_count = a_sell_count + 1 WHERE a_id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
