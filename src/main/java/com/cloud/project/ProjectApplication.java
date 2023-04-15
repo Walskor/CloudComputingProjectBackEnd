@@ -7,8 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication//(exclude= {DataSourceConfig.class})
-@ComponentScan(basePackages = {"com.cloud.project.config"})
-@EnableWebMvc
+@ComponentScan(basePackages = {"com.cloud.project"})
 public class ProjectApplication {
 
 	public static void main(String[] args) {

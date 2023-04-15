@@ -15,11 +15,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@CrossOrigin
+@CrossOrigin
 @RequestMapping("/article")
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+
+    @GetMapping("/test")
+    public String getArticle() {
+        return "This is article 1";
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable Integer id) {
