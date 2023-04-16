@@ -1,6 +1,6 @@
 # CloudComputingProjectBackEnd
 ## 1. Open RDS service on AWS
-The settings I used are just from the AWS02 Lab
+The settings I used are just from the AWS02 Lab:
 
 Step 1: Select AWS Service
 
@@ -21,7 +21,7 @@ another EC2 instance. Here we need to make sure the two
 instances should be in two different subnets, which will be used in the 
 Load Balancer.
 ## 3. Open Load Balancer
-Still, the steps are the same as the AWS02 Lab
+Still, the steps are the same as the AWS02 Lab:
 
 • Select AWS Service
 
@@ -39,8 +39,7 @@ Still, the steps are the same as the AWS02 Lab
 
 • Add access to EC2 security group
 
-But here
-we need to change the Health Check into Ping Port 8080 and 
+But here we need to change the Health Check into Ping Port 8080 and 
 Ping Path /hello/world, which will access the test page of 
 our program.
 ## 4. Generating JAR files needed
